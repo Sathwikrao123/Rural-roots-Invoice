@@ -1,8 +1,9 @@
+/* ── Config ─────────────────────────────────────────────────── */
 var ROWS = 8;
 var rowCount = 0;
 var SHEET_URL = "https://script.google.com/macros/s/AKfycbyuaJ1gz3ttr0OuvBe51F-6qIAw5EDfnuZzKR-4w29iS0GACQepi09M3M3phtjf5gYATA/exec";
 
-// ── Number to Words ──────────────────────────────────────────
+/* ── Number to Words ─────────────────────────────────────────── */
 var ones = ['','One','Two','Three','Four','Five','Six','Seven','Eight','Nine',
   'Ten','Eleven','Twelve','Thirteen','Fourteen','Fifteen','Sixteen','Seventeen','Eighteen','Nineteen'];
 var tens = ['','','Twenty','Thirty','Forty','Fifty','Sixty','Seventy','Eighty','Ninety'];
@@ -17,7 +18,7 @@ function numberToWords(n) {
   return numberToWords(Math.floor(n/10000000)) + ' Crore' + (n%10000000 ? ' ' + numberToWords(n%10000000) : '');
 }
 
-// ── Add / Remove Rows ────────────────────────────────────────
+/* ── Add Row ─────────────────────────────────────────────────── */
 function addRow() {
   rowCount++;
   var tbody = document.getElementById('itemsBody');
@@ -34,6 +35,7 @@ function addRow() {
   recalc();
 }
 
+/* ── Remove Row ──────────────────────────────────────────────── */
 function removeRow() {
   if (rowCount === 0) return;
   var row = document.getElementById('row-' + rowCount);
@@ -42,7 +44,7 @@ function removeRow() {
   recalc();
 }
 
-// ── Calculations ─────────────────────────────────────────────
+/* ── Calculate Row Values ────────────────────────────────────── */
 function getRowValues() {
   var rows = document.querySelectorAll('#itemsBody tr');
   var total = 0;
@@ -53,13 +55,14 @@ function getRowValues() {
     var amt  = qty * rate;
     var rs   = Math.floor(amt);
     var ps   = Math.round((amt - rs) * 100);
-    inp[3].value = rs || '';
-    inp[4].value = ps || '';
+    inp[3].value = rs  || '';
+    inp[4].value = ps  || '';
     total += amt;
   });
   return total;
 }
 
+/* ── Recalculate Totals ──────────────────────────────────────── */
 function recalc() {
   var total = getRowValues();
   var cgst  = total * 0.025;
@@ -80,7 +83,7 @@ function recalc() {
   document.getElementById('rupeesWords').textContent = grand > 0 ? numberToWords(Math.round(grand)) + ' Only' : '';
 }
 
-// ── Clear Form ───────────────────────────────────────────────
+/* ── Clear Form ──────────────────────────────────────────────── */
 function clearForm() {
   ['custName','custAddr','custGstin','custPhone','supplyDate','supplyPlace'].forEach(function(id) {
     document.getElementById(id).value = '';
@@ -92,7 +95,7 @@ function clearForm() {
   for (var i = 0; i < ROWS; i++) addRow();
 }
 
-// ── Save to Google Sheets ────────────────────────────────────
+/* ── Save to Google Sheets ───────────────────────────────────── */
 function saveToSheets() {
   var statusEl = document.getElementById('saveStatus');
   var rows = document.querySelectorAll('#itemsBody tr');
@@ -121,7 +124,8 @@ function saveToSheets() {
     return;
   }
 
-  var grandTotal = (document.getElementById('grandRs').textContent || '0') + '.' + (document.getElementById('grandPs').textContent || '00');
+  var grandTotal = (document.getElementById('grandRs').textContent || '0') + '.' +
+                   (document.getElementById('grandPs').textContent || '00');
 
   var payload = {
     invoiceNo    : document.getElementById('invNum').value,
@@ -164,6 +168,7 @@ function saveToSheets() {
   form.submit();
   document.body.removeChild(form);
 
+  // Show success after 2 seconds (iframe gives no callback)
   setTimeout(function() {
     statusEl.className = 'success';
     statusEl.textContent = 'Invoice saved to Google Sheets successfully!';
@@ -171,5 +176,5 @@ function saveToSheets() {
   }, 2000);
 }
 
-// ── Initialise ───────────────────────────────────────────────
+/* ── Init ────────────────────────────────────────────────────── */
 for (var i = 0; i < ROWS; i++) addRow();
