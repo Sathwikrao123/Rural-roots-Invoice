@@ -182,6 +182,8 @@
 
 
 /* ── Config ─────────────────────────────────────────────────── */
+
+/* ── Config ─────────────────────────────────────────────────── */
 var ROWS = 8;
 var rowCount = 0;
 var SHEET_URL = "https://script.google.com/macros/s/AKfycbyuaJ1gz3ttr0OuvBe51F-6qIAw5EDfnuZzKR-4w29iS0GACQepi09M3M3phtjf5gYATA/exec";
