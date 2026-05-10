@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -83,6 +83,109 @@
       <tr>
         <td class="totals-label">Add : SGST @ 2.5%</td>
         <td><span id="sgstRs"></span></td><td><span id="sgstPs"></span></td>
+      </tr>
+      <tr>
+        <td class="totals-label bold">GRAND TOTAL</td>
+        <td><span id="grandRs"></span></td><td><span id="grandPs"></span></td>
+      </tr>
+    </tfoot>
+  </table>
+  </div>
+
+  <div class="inv-rupees">Rupees <span id="rupeesWords">&nbsp;</span></div>
+
+  <div class="inv-footer">
+    <div class="inv-sign">
+      <div class="for-company">For Rural Roots</div>
+      <div class="auth">AUTHORISED SIGNATORY</div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rural Roots – Invoice Generator</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1 class="site-title">Rural Roots – Invoice Generator</h1>
+<p class="site-subtitle">Fill in the fields below, then Print / Save as PDF</p>
+
+<div class="controls">
+  <button onclick="addRow()">+ Add Item Row</button>
+  <button onclick="removeRow()" class="secondary">− Remove Last Row</button>
+  <button onclick="clearForm()" class="secondary">Clear Form</button>
+  <button onclick="saveToSheets()" class="save-btn">💾 Save to Google Sheets</button>
+  <button onclick="window.print()">🖨 Print / Save PDF</button>
+</div>
+<div id="saveStatus"></div>
+
+<div class="invoice-wrapper">
+<div id="invoice">
+
+  <div class="inv-header">
+    <div class="inv-phone">Phone : 9187543765</div>
+    <div class="inv-company">RURAL ROOTS</div>
+    <div class="inv-address">Sarvada, Hathyadka Village, Arasinamakki, Belthangady Tq., D. K. 574 198</div>
+    <div class="inv-gstin">GSTIN : 29HMWPS4256R1ZE</div>
+  </div>
+
+  <div class="inv-num-row">
+    <div class="inv-num-left">
+      <span class="inv-num-label">Invoice No. : RURAL ROOTS/</span>
+      <span><input id="invNum" style="width:60px;border:none;background:transparent;font-weight:700;font-size:1.1rem;color:#c0392b;font-family:inherit;outline:none;" value="001"></span>
+    </div>
+    <div class="inv-title">INVOICE</div>
+    <div class="inv-copy-box">
+      Original for Receipient<br>
+      Duplicate for Suplier/Transporter<br>
+      Triplicate for Supplier
+    </div>
+  </div>
+
+  <div class="inv-meta">
+    <div class="inv-meta-row"><label>Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</label><input class="field" id="custName" placeholder="Customer Name"></div>
+    <div class="inv-meta-row"><label>Date of Supply :</label><input class="field" id="supplyDate" type="date"></div>
+    <div class="inv-meta-row"><label>Address&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</label><input class="field" id="custAddr" placeholder="Address"></div>
+    <div class="inv-meta-row"><label>Phone No&nbsp;&nbsp;&nbsp;&nbsp;:</label><input class="field" id="custPhone" placeholder="Customer Phone" type="tel"></div>
+    <div class="inv-meta-row"><label>GSTIN&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</label><input class="field" id="custGstin" placeholder=""></div>
+    <div class="inv-meta-row"><label>Place of Supply :</label><input class="field" id="supplyPlace" placeholder=""></div>
+  </div>
+
+  <div class="table-scroll">
+  <table class="inv-table">
+    <thead>
+      <tr>
+        <th class="col-sl">Sl.<br>No.</th>
+        <th class="col-part">Particulars</th>
+        <th class="col-qty">Quantity</th>
+        <th class="col-rate">Rate<br>per Kg.</th>
+        <th class="col-rs" colspan="2">Amount<br>
+          <span style="display:flex;justify-content:space-between">
+            <span style="flex:1;text-align:center">Rs.</span>
+            <span style="width:50px;text-align:center">Ps.</span>
+          </span>
+        </th>
+      </tr>
+    </thead>
+    <tbody id="itemsBody"></tbody>
+    <tfoot>
+      <tr>
+        <td colspan="3" rowspan="2" style="vertical-align:top;text-align:left;font-size:11px;color:#555;">(Items listed above)</td>
+        <td class="totals-label">TOTAL</td>
+        <td><span id="totalRs"></span></td><td><span id="totalPs"></span></td>
       </tr>
       <tr>
         <td class="totals-label bold">GRAND TOTAL</td>
